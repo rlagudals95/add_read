@@ -16,14 +16,14 @@ export class BaseComponent<T extends HTMLElement> implements Component {
     private parentId: string;
     private elementId: string
 
-    constructor(canvas: HTMLElement, htmlString: string, x: number, y: number, cnt: number) {
+    constructor(container: HTMLElement, htmlString: string, x: number, y: number, cnt: number) {
 
         // container의 x, y 위치에 element를 그린다.
         const template = document.createElement('template');
         template.innerHTML = htmlString;
 
         // 요소를 삽일할 부모 태그
-        this.parentId = canvas.getAttribute('id')
+        this.parentId = container.getAttribute('id')
 
         this.element = template.content.firstElementChild! as T;
         this.element.style.position = 'absolute';
@@ -38,14 +38,14 @@ export class BaseComponent<T extends HTMLElement> implements Component {
         this.element.style.opacity = '1';
         this.element.setAttribute('onMouseOver', 'this.style.backgroundColor = "rgba(255,0,0,0.7)"');
         this.element.setAttribute('onMouseOut', 'this.style.backgroundColor = "rgba(255,0,0,0.2)"');
-        this.element.setAttribute('parent', canvas.getAttribute('id'))
+        this.element.setAttribute('parent', container.getAttribute('id'))
         this.element.addEventListener('click', this.moveTop);
 
         // 드래그 on
-        this.draggable(this.element, this.detectOverlap, this.throttle, canvas)
+        this.draggable(this.element, this.detectOverlap, this.throttle, container)
         //this.element.setAttribute('draggable', 'true')
         this.element.setAttribute('id', this.elementId);
-        this.attachTo(canvas, this.element, x, y, cnt);
+        this.attachTo(container, this.element, x, y, cnt);
 
         this.elementId = (document.getElementsByClassName('p-document').length).toString() + '_element'
         this.element.setAttribute('id', this.elementId);

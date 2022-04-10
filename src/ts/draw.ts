@@ -7,7 +7,7 @@ export const drawOptions = {
         y: -1
     },
 
-    isDraw: false,
+    isDraw: false as boolean,
 
     getPosition: (event, pos) => {
         pos.x = event.pageX
@@ -19,7 +19,7 @@ export const drawOptions = {
         let cnt: number = 0; // 생성한 요소 개수
 
         const drawSwitch = document.getElementById('drawSwitch');
-        const drawingSpace: HTMLElement = document.getElementById('document')!;
+        const container: HTMLElement = document.getElementById('document')!;
 
 
         let isDraw = this.isDraw
@@ -33,11 +33,11 @@ export const drawOptions = {
             if (isDraw) {
                 switchBtn.style.background = '#f7685b';
                 switchBtn.style.border = '1px solid #e54839';
-                drawingSpace.style.cursor = 'crosshair'
+                container.style.cursor = 'crosshair'
             } else {
                 switchBtn.style.background = 'gray';
                 switchBtn.style.border = '1px solid black';
-                drawingSpace.style.cursor = 'not-allowed'
+                container.style.cursor = 'not-allowed'
             }
         })
 
@@ -52,7 +52,7 @@ export const drawOptions = {
             console.log('생성!')
             if (isDraw) {
                 cnt++ // 생성한 요소 갯수 카운팅
-                new SquareComponent(drawingSpace, `<div style="width: 200px; height: 200px;"><div>`, this.pos.x, this.pos.y, cnt);
+                new SquareComponent(container, `<div style="width: 200px; height: 200px;"><div>`, this.pos.x, this.pos.y, cnt);
             } else {
                 alert('상자추가하기 버튼을 클릭해주세요😀 ');
             }
