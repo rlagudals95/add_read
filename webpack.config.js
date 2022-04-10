@@ -25,6 +25,10 @@ module.exports = {
                     loader: "ts-loader",
                 },
             },
+            // {
+            //     test: /\.css$/,
+            //     use: [MiniCssExtractPlugin.loader, 'css-loader'],
+            // }
         ],
     },
     resolve: {
@@ -35,7 +39,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: "./public/index.html", // 템플릿 위치
         }),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        //new MiniCssExtractPlugin({ filename: 'common.css' })
 
     ],
     devServer: {
