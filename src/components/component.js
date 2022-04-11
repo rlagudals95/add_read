@@ -25,63 +25,27 @@ var BaseComponent = /** @class */ (function () {
         utils_1.utils.draggable(this.element, this.detectOverlap, container);
         //this.element.setAttribute('draggable', 'true')
         this.element.setAttribute('id', this.elementId);
-        this.attachTo(container, this.element, x, y, cnt);
+        utils_1.utils.attachTo(container, this.element, x, y, cnt);
         this.elementId = (document.getElementsByClassName('p-document').length).toString() + '_element';
         this.element.setAttribute('id', this.elementId);
     }
-    BaseComponent.prototype.attachTo = function (parent, element, x, y, cnt) {
-        console.log('attatch!!!', x, y);
-        parent.appendChild(element);
-    };
     BaseComponent.prototype.moveTop = function (event) {
         console.log('moveTop!');
         event.stopPropagation();
         event.preventDefault();
         this.selectedElement = this;
         this.parentId = this.selectedElement.getAttribute("parent");
-        var elements = document.getElementsByClassName('p-' + this.parentId);
+        var elements = Array.from(document.getElementsByClassName('p-' + this.parentId));
         // 선택한 것을 제외한 다른 요소들 border: none;
-        for (var i = 0; i < elements.length; i++) {
-            var element = elements[i];
-            element.style.border = 'none';
+        if (elements.length) {
+            elements.map(function (element) {
+                element.style.border = 'none';
+            });
         }
         this.selectedElement.remove();
         this.selectedElement.style.border = '2px solid red';
         document.getElementById(this.parentId).append(this.selectedElement);
     };
-    BaseComponent.prototype.movePosition = function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('dragend!');
-        var x = e.pageX;
-        var y = e.pageY;
-        this.draggedElement = this;
-        this.draggedElement.style.left = "".concat(x, "px");
-        this.draggedElement.style.top = "".concat(y, "px");
-        this.draggedElement.removeAttribute('selected');
-    };
-    // private draggable(element, detectOverlap, throttle, container) {
-    //     element.onmousedown = function (event) {
-    //         document.onmousemove = function (event) {
-    //             console.log(document.getElementsByTagName('body')[0].style.width)
-    //             element.style.left = event.clientX + 'px';
-    //             element.style.top = event.clientY + 'px';
-    //             window.scrollBy(event.clientX, event.clientY);
-    //             element.setAttribute('selected', 'true');
-    //             throttle(detectOverlap(element), 100);
-    //         };
-    //         document.onmouseup = function () {
-    //             document.onmousemove = null;
-    //             element.removeAttribute('selected')
-    //             console.log('onmouseup')
-    //             if (element.releaseCapture) { element.releaseCapture(); }
-    //         };
-    //         if (element.setCapture) { element.setCapture(); }
-    //     }
-    //     element.unselectable = "on";
-    //     element.onselectstart = function () { return false };
-    //     element.style.userSelect = element.style.MozUserSelect = "none";
-    // };
     BaseComponent.prototype.detectOverlap = function (element) {
         var selectedElement = element.getBoundingClientRect();
         var Elements = document.getElementsByClassName('p-document');

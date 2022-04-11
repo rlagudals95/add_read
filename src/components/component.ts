@@ -38,18 +38,14 @@ export class BaseComponent<T extends HTMLElement>  {
 
         //this.element.setAttribute('draggable', 'true')
         this.element.setAttribute('id', this.elementId);
-        this.attachTo(container, this.element, x, y, cnt);
+
+        utils.attachTo(container, this.element, x, y, cnt);
 
         this.elementId = (document.getElementsByClassName('p-document').length).toString() + '_element'
         this.element.setAttribute('id', this.elementId);
 
     }
 
-    attachTo(parent: HTMLElement, element: HTMLElement, x: number, y: number, cnt: number) {
-        console.log('attatch!!!', x, y)
-        parent.appendChild(element);
-
-    }
 
     private moveTop(event: MouseEvent) { // z-index to
         console.log('moveTop!');
@@ -75,19 +71,6 @@ export class BaseComponent<T extends HTMLElement>  {
 
     }
 
-    // private movePosition(e) {
-    //     e.preventDefault();
-    //     e.stopPropagation();
-    //     console.log('dragend!')
-    //     let x: number = e.pageX;
-    //     let y: number = e.pageY;
-
-    //     this.draggedElement = this
-    //     this.draggedElement.style.left = `${x}px`;
-    //     this.draggedElement.style.top = `${y}px`;
-
-    //     this.draggedElement.removeAttribute('selected')
-    // }
 
     private detectOverlap(element) {
 

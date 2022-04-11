@@ -1,17 +1,7 @@
 "use strict";
 exports.__esModule = true;
-var draw_js_1 = require("./ts/draw.js");
-var pos = {
-    x: -1,
-    y: -1
-};
-var cnt = 0; // 생성한 요소 개수
-function getPosition(event) {
-    var x = event.pageX;
-    var y = event.pageY;
-    pos.x = x;
-    pos.y = y;
-}
+var dragSwitch_js_1 = require("./components/dragSwitch.js");
 window.onload = function () {
-    draw_js_1.drawOptions.drawOn();
+    new dragSwitch_js_1.drawSwitch(document.getElementById('wrapper'), "<button id=\"drawSwitch\">\uC0C1\uC790\uADF8\uB9AC\uAE30</button>", 50, 20);
+    //drawOptions.drawOn();
 };

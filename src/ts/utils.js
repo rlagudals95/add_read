@@ -3,16 +3,20 @@ exports.__esModule = true;
 exports.utils = void 0;
 exports.utils = {
     waiting: false,
+    pos: {
+        x: -1,
+        y: -1
+    },
     draggable: function (element, detectOverlap, container) {
+        var throttle = this.throttle;
         element.onmousedown = function (event) {
-            var _this = this;
             document.onmousemove = function (event) {
                 console.log(document.getElementsByTagName('body')[0].style.width);
                 element.style.left = event.clientX + 'px';
                 element.style.top = event.clientY + 'px';
                 window.scrollBy(event.clientX, event.clientY);
                 element.setAttribute('selected', 'true');
-                _this.throttle(detectOverlap(element), 100);
+                throttle(detectOverlap(element), 300);
             };
             document.onmouseup = function () {
                 document.onmousemove = null;
@@ -42,5 +46,13 @@ exports.utils = {
                 }, limit);
             }
         };
+    },
+    attachTo: function (parent, element, x, y, cnt) {
+        parent.appendChild(element);
+    },
+    removeEvent: function (element) {
+        console.log('removeEvent');
+        var el = element, elClone = el.cloneNode(true);
+        el.parentNode.replaceChild(elClone, el);
     }
 };

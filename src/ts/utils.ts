@@ -1,7 +1,13 @@
+import { SquareComponent } from "../components/square";
+
 export const utils = {
     waiting: false as boolean,
+    pos: {
+        x: -1,
+        y: -1
+    },
 
-    draggable(element, detectOverlap, container) {
+    draggable(element, detectOverlap: Function, container) {
         const throttle = this.throttle
         element.onmousedown = function (event) {
             document.onmousemove = (event) => {
@@ -32,7 +38,7 @@ export const utils = {
         element.style.userSelect = element.style.MozUserSelect = "none";
     },
 
-    throttle(callback, limit = 100) {
+    throttle(callback: Function, limit = 100) {
 
         return function () {
             if (!this.waiting) {
@@ -43,5 +49,19 @@ export const utils = {
                 }, limit)
             }
         }
-    }
+    },
+
+
+    attachTo(parent: HTMLElement, element: HTMLElement, x: number, y: number, cnt?: number) {
+        parent.appendChild(element);
+    },
+
+    removeEvent(element) {
+        console.log('removeEvent')
+        let el = element,
+            elClone = el.cloneNode(true);
+
+        el.parentNode.replaceChild(elClone, el);
+    },
+
 }
