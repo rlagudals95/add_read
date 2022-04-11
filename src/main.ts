@@ -1,14 +1,19 @@
 import { drawSwitch } from "./components/dragSwitch.js";
-import { drawOptions } from "./ts/draw.js"
+import { drawSwitchOptions } from "./components/dragSwitch.js"
 
 
 window.onload = function () {
 
-    new drawSwitch(
-        document.getElementById('wrapper')
-        , `<button id="drawSwitch">상자그리기</button>`, 50, 20);
+    const drawSwitchOptions: drawSwitchOptions = {
+        container: document.getElementById('wrapper'),
+        htmlString: `<button id="drawSwitch">상자그리기</button>`,
+        x: 50,
+        y: 20
 
-    //drawOptions.drawOn();
+    }
+
+    new drawSwitch(drawSwitchOptions);
+
 }
 
 

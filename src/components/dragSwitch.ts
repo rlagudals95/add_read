@@ -1,6 +1,14 @@
 import { utils } from '../ts/utils'
 import { SquareComponent } from './square.js';
 
+export interface drawSwitchOptions {
+    container: HTMLElement, // 삽입할 html의 부모태그
+    htmlString: string, // 삽입할 html
+    x: number, // 삽입할 위치 x좌표
+    y: number, // 삽입할 위치 y좌표
+}
+
+
 export class drawSwitch<T extends HTMLElement> {
 
     private element!: T;
@@ -11,16 +19,21 @@ export class drawSwitch<T extends HTMLElement> {
 
     private isDraw: boolean = false;
 
-    constructor(container: HTMLElement, htmlString: string, x: number, y: number) {
-        console.log('add dragSwitch!!')
+    constructor(drawSwitchOptions: drawSwitchOptions) {
+
+        const initOptions = {
+            ...drawSwitch.defaultOptions,
+            ...drawSwitchOptions
+        }
+
         const template = document.createElement('template');
-        template.innerHTML = htmlString;
+        template.innerHTML = initOptions.htmlString;
 
         this.element = template.content.firstElementChild! as T;
         this.element.style.position = 'absolute';
         this.element.style.transform = 'translate(-50%, -50%)'
-        this.element.style.left = `${x}%`;
-        this.element.style.bottom = `${y}px`;
+        this.element.style.left = `${initOptions.x}%`;
+        this.element.style.bottom = `${initOptions.y}px`;
         this.element.style.zIndex = '100';
 
         this.element.addEventListener('click', (e) => {
@@ -29,8 +42,7 @@ export class drawSwitch<T extends HTMLElement> {
             this.drawOn()
         })
 
-
-        utils.attachTo(container, this.element, x, y);
+        utils.attachTo(initOptions, this.element);
     }
 
     private getPosition = (event) => {
@@ -48,27 +60,31 @@ export class drawSwitch<T extends HTMLElement> {
         this.isDraw = !this.isDraw
 
         if (this.isDraw) {
-            console.log('이벤트 등록!')
             drawSwitch.style.background = '#f7685b';
             drawSwitch.style.border = '1px solid #e54839';
             container.style.cursor = 'crosshair'
-
             container.addEventListener('mousemove', (e) => {
                 this.getPosition(e)
             });
             container.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log('생성!')
+
                 if (this.isDraw) {
                     cnt++ // 생성한 요소 갯수 카운팅
-                    new SquareComponent(container, `<div style="width: 200px; height: 200px;"><div>`, this.pos.x, this.pos.y, cnt);
+                    const squareOptions = {
+                        container: container,
+                        htmlString: `<div style="width: 200px; height: 200px;"><div>`,
+                        x: this.pos.x, y: this.pos.y, cnt: cnt
+                    }
+
+                    new SquareComponent(squareOptions);
                 } else {
                     alert('상자추가하기 버튼을 클릭해주세요😀 ');
                 }
             })
         } else {
-            console.log('이벤트 제거!')
+            // 이벤트 제거
             drawSwitch.style.background = 'gray';
             drawSwitch.style.border = '1px solid black';
             container.style.cursor = 'not-allowed'
@@ -77,5 +93,13 @@ export class drawSwitch<T extends HTMLElement> {
         }
     }
 
+    public static get defaultOptions(): drawSwitchOptions {
+        return {
+            container: document.createElement('div'),
+            htmlString: '',
+            x: 0,
+            y: 0,
+        };
+    }
 
 }

@@ -3,29 +3,30 @@ exports.__esModule = true;
 exports.BaseComponent = void 0;
 var utils_1 = require("../ts/utils");
 var BaseComponent = /** @class */ (function () {
-    function BaseComponent(container, htmlString, x, y, cnt) {
+    // container: HTMLElement, htmlString: string, x: number, y: number, cnt: number
+    function BaseComponent(drawOptions) {
         // container의 x, y 위치에 element를 그린다.
         var template = document.createElement('template');
-        template.innerHTML = htmlString;
+        template.innerHTML = drawOptions.htmlString;
         // 요소를 삽일할 부모 태그
-        this.parentId = container.getAttribute('id');
+        this.parentId = drawOptions.container.getAttribute('id');
         this.element = template.content.firstElementChild;
         this.element.style.position = 'absolute';
         this.element.style.transform = 'translate(-50%, -50%)';
-        this.element.style.left = "".concat(x, "px");
-        this.element.style.top = "".concat(y, "px");
+        this.element.style.left = "".concat(drawOptions.x, "px");
+        this.element.style.top = "".concat(drawOptions.y, "px");
         this.element.className = 'p-' + this.parentId;
         this.element.style.backgroundColor = 'rgba(255,0,0,0.2)';
         this.element.style.opacity = '1';
         this.element.setAttribute('onMouseOver', 'this.style.backgroundColor = "rgba(255,0,0,0.7)"');
         this.element.setAttribute('onMouseOut', 'this.style.backgroundColor = "rgba(255,0,0,0.2)"');
-        this.element.setAttribute('parent', container.getAttribute('id'));
+        this.element.setAttribute('parent', drawOptions.container.getAttribute('id'));
         this.element.addEventListener('click', this.moveTop);
         // 드래그 on
-        utils_1.utils.draggable(this.element, this.detectOverlap, container);
+        utils_1.utils.draggable(this.element, this.detectOverlap, drawOptions.container);
         //this.element.setAttribute('draggable', 'true')
         this.element.setAttribute('id', this.elementId);
-        utils_1.utils.attachTo(container, this.element, x, y, cnt);
+        utils_1.utils.attachTo(drawOptions, this.element);
         this.elementId = (document.getElementsByClassName('p-document').length).toString() + '_element';
         this.element.setAttribute('id', this.elementId);
     }

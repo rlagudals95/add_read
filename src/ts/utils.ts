@@ -1,5 +1,3 @@
-import { SquareComponent } from "../components/square";
-
 export const utils = {
     waiting: false as boolean,
     pos: {
@@ -11,7 +9,7 @@ export const utils = {
         const throttle = this.throttle
         element.onmousedown = function (event) {
             document.onmousemove = (event) => {
-                console.log(document.getElementsByTagName('body')[0].style.width)
+                // console.log(document.getElementsByTagName('body')[0].style.width)
                 element.style.left = event.clientX + 'px';
                 element.style.top = event.clientY + 'px';
                 window.scrollBy(event.clientX, event.clientY);
@@ -52,8 +50,9 @@ export const utils = {
     },
 
 
-    attachTo(parent: HTMLElement, element: HTMLElement, x: number, y: number, cnt?: number) {
-        parent.appendChild(element);
+    attachTo(drawOptions, element) {
+        const container: HTMLElement = drawOptions.container
+        container.append(element);
     },
 
     removeEvent(element) {

@@ -11,7 +11,7 @@ exports.utils = {
         var throttle = this.throttle;
         element.onmousedown = function (event) {
             document.onmousemove = function (event) {
-                console.log(document.getElementsByTagName('body')[0].style.width);
+                // console.log(document.getElementsByTagName('body')[0].style.width)
                 element.style.left = event.clientX + 'px';
                 element.style.top = event.clientY + 'px';
                 window.scrollBy(event.clientX, event.clientY);
@@ -47,8 +47,9 @@ exports.utils = {
             }
         };
     },
-    attachTo: function (parent, element, x, y, cnt) {
-        parent.appendChild(element);
+    attachTo: function (drawOptions, element) {
+        var container = drawOptions.container;
+        container.append(element);
     },
     removeEvent: function (element) {
         console.log('removeEvent');
