@@ -1,12 +1,6 @@
 import { utils } from '../ts/utils'
 
-interface drawOptions {
-    container: HTMLElement, // 삽입할 html의 부모태그
-    htmlString: string, // 삽입할 html
-    x: number, // 삽입할 위치 x좌표
-    y: number, // 삽입할 위치 y좌표
-    cnt: number // 삽입한 요소의 갯수
-}
+
 
 export class BaseComponent<T extends HTMLElement>  {
 
@@ -14,14 +8,16 @@ export class BaseComponent<T extends HTMLElement>  {
     private selectedElement: any;
     private parentId: string;
     private elementId: string
+    private parent: HTMLElement
 
     // container: HTMLElement, htmlString: string, x: number, y: number, cnt: number
-    constructor(drawOptions: drawOptions) {
+    constructor(drawOptions) {
 
         // container의 x, y 위치에 element를 그린다.
         const template = document.createElement('template');
         template.innerHTML = drawOptions.htmlString;
 
+        this.parent = drawOptions.container
         // 요소를 삽일할 부모 태그
         this.parentId = drawOptions.container.getAttribute('id')
 
@@ -33,11 +29,17 @@ export class BaseComponent<T extends HTMLElement>  {
 
         this.element.className = 'p-' + this.parentId;
 
-
         this.element.style.backgroundColor = 'rgba(255,0,0,0.2)';
         this.element.style.opacity = '1';
-        this.element.setAttribute('onMouseOver', 'this.style.backgroundColor = "rgba(255,0,0,0.7)"');
-        this.element.setAttribute('onMouseOut', 'this.style.backgroundColor = "rgba(255,0,0,0.2)"');
+        this.element.addEventListener('mouseover', function (e) {
+
+            this.style.backgroundColor = "rgba(255,0,0,0.7)"
+        });
+
+        this.element.addEventListener('mouseout', function () {
+            this.style.backgroundColor = "rgba(255,0,0,0.2)"
+        });
+
         this.element.setAttribute('parent', drawOptions.container.getAttribute('id'))
         this.element.addEventListener('click', this.moveTop);
 

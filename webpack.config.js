@@ -27,7 +27,8 @@ module.exports = {
                 },
             },
             {
-                test: /\.css$/,
+                test: /\.css$/i,
+                exclude: /node_modules/,
                 use: [MiniCssExtractPlugin.loader, 'css-loader'],
             }
         ],
@@ -41,7 +42,7 @@ module.exports = {
             template: "./public/index.html", // 템플릿 위치
         }),
         new webpack.HotModuleReplacementPlugin(),
-        new MiniCssExtractPlugin({ filename: 'common.css' })
+        new MiniCssExtractPlugin({ linkType: false, })
 
     ],
     devServer: {

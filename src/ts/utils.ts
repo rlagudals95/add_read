@@ -7,6 +7,7 @@ export const utils = {
 
     draggable(element, detectOverlap: Function, container) {
         const throttle = this.throttle
+
         element.onmousedown = function (event) {
             document.onmousemove = (event) => {
                 // console.log(document.getElementsByTagName('body')[0].style.width)
