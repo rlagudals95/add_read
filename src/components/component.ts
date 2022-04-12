@@ -9,8 +9,8 @@ export class BaseComponent<T extends HTMLElement>  {
     private parentId: string;
     private elementId: string
     private parent: HTMLElement
+    private isSelected: boolean
 
-    // container: HTMLElement, htmlString: string, x: number, y: number, cnt: number
     constructor(drawOptions) {
 
         // container의 x, y 위치에 element를 그린다.
@@ -46,6 +46,27 @@ export class BaseComponent<T extends HTMLElement>  {
         // 드래그 on
         utils.draggable(this.element, this.detectOverlap, drawOptions.container)
 
+        this.element.addEventListener('mousedown', () => {
+            this.isSelected = true
+            this.element.style.border = '2px solid red'
+
+            this.element.addEventListener('mousemove', () => {
+                utils.throttle(this.detectOverlap(this.element), 300)
+            })
+        })
+
+        this.element.addEventListener('mouseup', () => {
+            console.log('up!')
+            this.isSelected = false
+            // this.element.style.background = 'rgba(255, 0, 0, 0.2)'
+
+            this.element.removeEventListener('mousemove', () => {
+                utils.throttle(this.detectOverlap(this.element), 300)
+            })
+        })
+
+
+
         //this.element.setAttribute('draggable', 'true')
         this.element.setAttribute('id', this.elementId);
 
@@ -73,18 +94,15 @@ export class BaseComponent<T extends HTMLElement>  {
             })
         }
 
-
         this.selectedElement.remove();
         this.selectedElement.style.border = '2px solid red';
-
         document.getElementById(this.parentId).append(this.selectedElement);
 
     }
 
+    private detectOverlap(element?) {
 
-    private detectOverlap(element) {
-
-        const selectedElement = element.getBoundingClientRect();
+        const selectedElement = this.element.getBoundingClientRect();
 
         const Elements = document.getElementsByClassName('p-document')
 
@@ -92,8 +110,9 @@ export class BaseComponent<T extends HTMLElement>  {
         for (let i = 0; i < Elements.length; i++) {
             const elementRect = Elements[i].getBoundingClientRect();
             const _element = Elements[i] as HTMLElement
-
-            if (!_element.getAttribute('selected') &&
+            //!_element.getAttribute('selected')
+            if (
+                this.isSelected &&
                 selectedElement.x < elementRect.x + elementRect.width &&
                 selectedElement.x + selectedElement.width > elementRect.x &&
                 selectedElement.y < elementRect.y + elementRect.height &&
@@ -105,6 +124,32 @@ export class BaseComponent<T extends HTMLElement>  {
             }
         }
     }
+
+
+    // private detectOverlap(element) {
+
+    //     const selectedElement = element.getBoundingClientRect();
+
+    //     const Elements = document.getElementsByClassName('p-document')
+
+    //     // 겹치는 element 검사
+    //     for (let i = 0; i < Elements.length; i++) {
+    //         const elementRect = Elements[i].getBoundingClientRect();
+    //         const _element = Elements[i] as HTMLElement
+
+    //         if (!_element.getAttribute('selected') &&
+    //             selectedElement.x < elementRect.x + elementRect.width &&
+    //             selectedElement.x + selectedElement.width > elementRect.x &&
+    //             selectedElement.y < elementRect.y + elementRect.height &&
+    //             selectedElement.height + selectedElement.y > elementRect.y
+    //         ) {
+    //             _element.style.border = '2px solid blue'
+    //         } else {
+    //             _element.style.border = 'none'
+    //         }
+    //     }
+    // }
+
 
 }
 
