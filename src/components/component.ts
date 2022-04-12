@@ -1,7 +1,5 @@
 import { utils } from '../ts/utils'
 
-
-
 export class BaseComponent<T extends HTMLElement>  {
 
     private element!: T;
@@ -9,7 +7,9 @@ export class BaseComponent<T extends HTMLElement>  {
     private parentId: string;
     private elementId: string
     private parent: HTMLElement
-    private isSelected: boolean
+    public isSelected: boolean
+    private DELAYTIME: number = 300;
+    private mouseMove
 
     constructor(drawOptions) {
 
@@ -27,45 +27,39 @@ export class BaseComponent<T extends HTMLElement>  {
         this.element.style.left = `${drawOptions.x}px`;
         this.element.style.top = `${drawOptions.y}px`;
 
+        // class name 지정형식 지양
+        // 컴포넌트 위주 개발자라면 더더욱 지양
         this.element.className = 'p-' + this.parentId;
 
         this.element.style.backgroundColor = 'rgba(255,0,0,0.2)';
         this.element.style.opacity = '1';
-        this.element.addEventListener('mouseover', function (e) {
 
-            this.style.backgroundColor = "rgba(255,0,0,0.7)"
-        });
-
-        this.element.addEventListener('mouseout', function () {
-            this.style.backgroundColor = "rgba(255,0,0,0.2)"
-        });
-
+        // attribute 사용시양
         this.element.setAttribute('parent', drawOptions.container.getAttribute('id'))
+
+        utils.dragInit(this.element)
+
         this.element.addEventListener('click', this.moveTop);
 
-        // 드래그 on
-        utils.draggable(this.element, this.detectOverlap, drawOptions.container)
+        this.mouseMove = () => { utils.throttle(this.detectOverlap(this.element, this.parent), this.DELAYTIME) }
 
+
+        // this, bind, call, apply 함수 찾아보기 중요!
+        // init 함수로 모듈화 
         this.element.addEventListener('mousedown', () => {
             this.isSelected = true
-            this.element.style.border = '2px solid red'
-
-            this.element.addEventListener('mousemove', () => {
-                utils.throttle(this.detectOverlap(this.element), 300)
-            })
+            this.element.addEventListener('mousemove', this.mouseMove)
         })
 
         this.element.addEventListener('mouseup', () => {
-            console.log('up!')
+            console.log('remove Event')
             this.isSelected = false
-            // this.element.style.background = 'rgba(255, 0, 0, 0.2)'
 
-            this.element.removeEventListener('mousemove', () => {
-                utils.throttle(this.detectOverlap(this.element), 300)
-            })
+            this.element.removeEventListener('mousemove', this.mouseMove)
         })
 
-
+        // 드래그 on
+        utils.draggable(this.element, this.parent)
 
         //this.element.setAttribute('draggable', 'true')
         this.element.setAttribute('id', this.elementId);
@@ -100,17 +94,26 @@ export class BaseComponent<T extends HTMLElement>  {
 
     }
 
-    private detectOverlap(element?) {
+    private detectOverlap(element: T, container: HTMLElement) {
 
         const selectedElement = this.element.getBoundingClientRect();
 
-        const Elements = document.getElementsByClassName('p-document')
+        const childNodes: NodeList = container.childNodes
 
-        // 겹치는 element 검사
-        for (let i = 0; i < Elements.length; i++) {
-            const elementRect = Elements[i].getBoundingClientRect();
-            const _element = Elements[i] as HTMLElement
+        // class 없이 container의 자식 노드들을 array에 담는다.
+        let childArr = [];
+        for (let i = 0; i < childNodes.length; i++) {
+            if (childNodes[i] instanceof HTMLDivElement) {
+                childArr.push(childNodes[i])
+            }
+        }
+
+        for (let i = 0; i < childArr.length; i++) {
+
+            const elementRect = childArr[i].getBoundingClientRect();
+            const _element = childArr[i] as HTMLElement
             //!_element.getAttribute('selected')
+
             if (
                 this.isSelected &&
                 selectedElement.x < elementRect.x + elementRect.width &&
@@ -122,34 +125,10 @@ export class BaseComponent<T extends HTMLElement>  {
             } else {
                 _element.style.border = 'none'
             }
+            //_element.style.border = 'none'
         }
+
+        this.element.style.border = '2px solid red'
     }
-
-
-    // private detectOverlap(element) {
-
-    //     const selectedElement = element.getBoundingClientRect();
-
-    //     const Elements = document.getElementsByClassName('p-document')
-
-    //     // 겹치는 element 검사
-    //     for (let i = 0; i < Elements.length; i++) {
-    //         const elementRect = Elements[i].getBoundingClientRect();
-    //         const _element = Elements[i] as HTMLElement
-
-    //         if (!_element.getAttribute('selected') &&
-    //             selectedElement.x < elementRect.x + elementRect.width &&
-    //             selectedElement.x + selectedElement.width > elementRect.x &&
-    //             selectedElement.y < elementRect.y + elementRect.height &&
-    //             selectedElement.height + selectedElement.y > elementRect.y
-    //         ) {
-    //             _element.style.border = '2px solid blue'
-    //         } else {
-    //             _element.style.border = 'none'
-    //         }
-    //     }
-    // }
-
-
 }
 

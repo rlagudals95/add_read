@@ -14,6 +14,10 @@ window.onload = function () {
 
     new drawSwitch(drawSwitchOptions);
 
+    window.addEventListener('resize', function () {
+        console.log('resize', window.innerWidth)
+
+    })
 }
 
 
