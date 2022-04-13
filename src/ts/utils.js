@@ -151,23 +151,34 @@ exports.utils = {
         var innerWidth = window.innerWidth;
         var innerHeight = window.innerHeight;
         console.log('container ::', container);
+        // container에 직접 height와 width를 계속 더하는 로직은 버그가 너무 많이 일어남...!
         // container 넓이 늘어나는 로직개선
+        // if (isItIn(container, element)) {
+        //     console.log('안에없음')
+        //     gapX = scrollX - innerWidth + 2
+        //     innerWidth += Math.abs(gapX)
+        //     container.style.width = `${innerWidth}px`;
+        //     gapY = scrollY - innerHeight + 2
+        //     innerHeight += Math.abs(gapY)
+        //     container.style.height = `${innerHeight}px`;
+        //     console.log('innerHeight ::', innerHeight)
+        // } else {
+        //     console.log('안에있음')
+        // }
         if (isItIn(container, element)) {
+            console.log('innerWidth :', scrollX);
+            console.log('innerWidth :', scrollY);
+            container.style.width = "".concat(scrollX, "px");
+            container.style.height = "".concat(scrollY, "px");
+            // attachTo 조건 주자 화면 밖으로 마우스가 나가면 저절로 생김.....!
             console.log('안에없음');
-            gapX = scrollX - innerWidth + 2;
-            innerWidth += Math.abs(gapX);
-            container.style.width = "".concat(innerWidth, "px");
-            gapY = scrollY - innerHeight + 2;
-            innerHeight += Math.abs(gapY);
-            container.style.height = "".concat(innerHeight, "px");
-            console.log('innerHeight ::', innerHeight);
         }
         else {
             console.log('안에있음');
         }
-        //container.style.width = `${innerWidth}px`;
-        //container.style.height = `${innerHeight}px`;
-        scrollTo(element.offsetTop, element.offsetLeft);
+        //container.style.width = '100%';
+        //container.style.height = '100%';
+        scrollTo(element.offsetTop - 200, element.offsetLeft - 200);
     },
     // element가 view안에 있는지 감지하는 함수
     isInViewport: function (element) {
@@ -182,10 +193,10 @@ exports.utils = {
     isItIn: function (parent, child) {
         var box1coords = parent.getBoundingClientRect();
         var box2coords = child.getBoundingClientRect();
-        if (box2coords.top + 20 < box1coords.top ||
-            box2coords.right + 20 > box1coords.right ||
-            box2coords.bottom + 20 > box1coords.bottom ||
-            box2coords.left + 20 < box1coords.left) {
+        if (box2coords.top + 50 < box1coords.top ||
+            box2coords.right + 50 > box1coords.right ||
+            box2coords.bottom + 50 > box1coords.bottom ||
+            box2coords.left + 50 < box1coords.left) {
             return true;
         }
         return false;

@@ -38,11 +38,11 @@ export class BaseComponent<T extends HTMLElement>  {
 
         utils.attachTo(drawOptions, this.element);
 
-        this.mouseMove = () => { utils.throttle(this.detectOverlap(this.element, this.parent), this.DELAYTIME) }
+        this.mouseMove = () => { utils.throttle(this.detectOverlap(this.element, this.parent)) }
 
         // 드래그 on
         utils.draggable(this.element, this.parent)
-        utils.dragInit(this.element, this.isSelected, this.elements, this.mouseMove, this.parent);
+        utils.dragInit(this.element, this.isSelected, this.elements, this.mouseMove, this.parent, utils.mouseDownHandler);
     }
 
     private detectOverlap(element: T, container: HTMLElement) {

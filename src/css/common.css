@@ -20,6 +20,7 @@ body {
     height: 100%;
     border: 1px solid blue;
     background-color: aqua;
+    opacity: 0.3;
     /* border: 1px solid red;
             background: skyblue; */
     cursor: not-allowed;
