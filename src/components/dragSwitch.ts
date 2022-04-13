@@ -30,7 +30,7 @@ export class drawSwitch<T extends HTMLElement> {
         template.innerHTML = initOptions.htmlString;
 
         this.element = template.content.firstElementChild! as T;
-        this.element.style.position = 'absolute';
+        this.element.style.position = 'fixed';
         this.element.style.transform = 'translate(-50%, -50%)'
         this.element.style.left = `${initOptions.x}%`;
         this.element.style.bottom = `${initOptions.y}px`;

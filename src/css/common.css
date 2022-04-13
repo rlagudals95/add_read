@@ -26,16 +26,14 @@ body {
 }
 
 #drawSwitch {
-    position: fixed;
+    /* position: fixed;
     bottom: 20px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
     padding: 10px 30px;
     border-radius: 30px;
     color: white;
     justify-content: center;
-    /* background: #f7685b;
-            border: 1px solid #e54839; */
     background: gray;
     border: 1px solid black;
     box-sizing: border-box;

@@ -7,6 +7,9 @@ export const utils = {
     element: null,
     isSeleted: false,
     elements: [],
+    innerWidth: 0 as number,
+    innerHeight: 0 as number,
+    flag: false as boolean,
 
     draggable(element,
         container) {
@@ -16,40 +19,10 @@ export const utils = {
         //addEventListner로 변경
         element.addEventListener('mousedown', (event) => {
             // document 전역 객체에다가 직접 이벤트 핸들러를 등록하고, 해제 보류....
-            console.log('다운!')
+            console.log('현재창 크기 :!', window.innerWidth, window.innerHeight)
 
             container.onmousemove = (event) => {
-                element.style.left = event.clientX + 'px';
-                element.style.top = event.clientY + 'px';
-
-                //console.log('오프셋!', element.offsetTop, '//', element.offsetLeft)
-
-                // offset값으로 좌표계산하기
-                const xp = Math.abs(container.getBoundingClientRect().x); // 호출마다 계산 > 최소호출 희망 > const { x, y } = contianer.getBoundingClientRect();
-                const yp = Math.abs(container.getBoundingClientRect().y);
-                // window.scrollBy(event.clientX, event.clientY);
-                // const height = container.scrollHeight;
-                // const width = container.scrollWidth;
-
-                // const x = event.clientX;
-                // const y = event.clientY;
-
-                // const xPercentage = x / screen.width;
-                // const yPercentage = y / screen.height;
-
-                window.scrollTo(element.offsetLeft, element.offsetTop)
-
-                if (xp > 2 || yp > 2) {
-                    let innerWidth = window.innerWidth;
-                    innerWidth += Math.abs(container.getBoundingClientRect().x)
-
-                    let innerHeight = window.innerHeight;
-                    innerHeight += Math.abs(container.getBoundingClientRect().y)
-
-                    container.style.width = `${innerWidth}px`;
-                    container.style.height = `${innerHeight}px`;
-                }
-
+                this.throttle(this.outRangeScreen(event, element, container, this.isItIn, this.innerWidth, this.innerHeight), 100)
             };
 
             // down 다음에 이벤트 리스너 등록
@@ -87,6 +60,7 @@ export const utils = {
 
 
     attachTo(drawOptions, element) {
+        console.log('attach!!!!')
         console.log(drawOptions)
         const container: HTMLElement = drawOptions.container
         this.elements.push(element)
@@ -184,6 +158,89 @@ export const utils = {
         element.remove();
         element.style.border = '2px solid red';
         parent.append(element);
+    },
+
+    outRangeScreen: (event, element, container, isItIn,
+        screenWidth, screenHeight) => {
+        //console.log('isInViewport :: ', isInViewport)
+
+
+        console.log(screenWidth, '////', screenWidth)
+        let screenX
+        let screenY
+
+
+        screenX = window.innerWidth;
+        screenY = window.innerHeight;
+
+        element.style.left = event.clientX + 'px';
+        element.style.top = event.clientY + 'px';
+
+        const scrollX = document.documentElement.scrollWidth;
+        const scrollY = document.documentElement.scrollHeight;
+        //console.log('스크롤 넓이 xy', scrollX, scrollY) // inner보다 커지면 이게 커지면 // 스크롤 넓이가 2가 더 크다
+
+        let gapX;
+        let gapY;
+
+        // 계속 선언되서 넓이가 초기화 되는듯...!
+        let innerWidth = window.innerWidth;
+        let innerHeight = window.innerHeight;
+        console.log('container ::', container)
+        // container 넓이 늘어나는 로직개선
+        if (isItIn(container, element)) {
+            console.log('안에없음')
+
+            gapX = scrollX - innerWidth + 2
+            innerWidth += Math.abs(gapX)
+            container.style.width = `${innerWidth}px`;
+
+
+            gapY = scrollY - innerHeight + 2
+            innerHeight += Math.abs(gapY)
+            container.style.height = `${innerHeight}px`;
+
+            console.log('innerHeight ::', innerHeight)
+        } else {
+            console.log('안에있음')
+        }
+
+
+        //container.style.width = `${innerWidth}px`;
+        //container.style.height = `${innerHeight}px`;
+
+        scrollTo(element.offsetTop, element.offsetLeft)
+
+    },
+
+    // element가 view안에 있는지 감지하는 함수
+    isInViewport: (element) => {
+        const rect = element.getBoundingClientRect();
+        console.log('rect :::: ', rect.bottom, window.innerHeight)
+        return (
+            // rect.top >= 0 &&
+            // rect.left >= 0 &&
+            (rect.bottom + 20) <= (window.innerHeight || document.documentElement.clientHeight) &&
+            (rect.right + 20) <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    },
+
+    isItIn: (parent, child) => {
+        const box1coords = parent.getBoundingClientRect();
+        const box2coords = child.getBoundingClientRect();
+
+        if (
+            box2coords.top + 20 < box1coords.top ||
+            box2coords.right + 20 > box1coords.right ||
+            box2coords.bottom + 20 > box1coords.bottom ||
+            box2coords.left + 20 < box1coords.left) {
+
+            return true;
+        }
+
+        return false;
 
     }
+
+
 }
