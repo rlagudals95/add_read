@@ -121,6 +121,7 @@ export const utils = {
         console.log(event.offsetX, '/', event.offsetY)
         // event.offsetX > 120 
         // event.target.tagName == 'DIV'
+
         if (event.offsetX > 120) {
             element.style.left = `${event.offsetX}px`;
             element.style.top = `${event.offsetY}px`;
