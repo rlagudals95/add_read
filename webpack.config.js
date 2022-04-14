@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
     entry: "./src/main.ts", // 번들링 시작 위치
     output: {
-        path: path.join(__dirname, "/dist"), // 번들 결과물 위치
+        path: path.join(__dirname, "/docs"), // 번들 결과물 위치
         filename: "bundle.js",
     },
     module: {

@@ -3,15 +3,9 @@ import { utils } from '../ts/utils'
 export class BaseComponent<T extends HTMLElement>  {
 
     private element!: T;
-    private elements
-    private selectedElement: any;
-    private parentId: string;
-    private elementId: string
     private parent: HTMLElement
     public isSelected: boolean;
-    private DELAYTIME: number = 300;
     private mouseMove
-
 
     constructor(drawOptions) {
 
@@ -21,17 +15,12 @@ export class BaseComponent<T extends HTMLElement>  {
 
         this.parent = drawOptions.container
 
-
-        console.log('먼저등록 :', this.elements)
-
         this.element = template.content.firstElementChild! as T;
         this.element.style.position = 'absolute';
         this.element.style.transform = 'translate(-50%, -50%)'
         this.element.style.left = `${drawOptions.x}px`;
         this.element.style.top = `${drawOptions.y}px`;
-
-        // class name 지정형식 지양
-        // 컴포넌트 위주 개발자라면 더더욱 지양
+        //this.element.className = 'drag_component';
 
         this.element.style.backgroundColor = 'rgba(255,0,0,0.2)';
         this.element.style.opacity = '1';
@@ -42,11 +31,10 @@ export class BaseComponent<T extends HTMLElement>  {
 
         // 드래그 on
         utils.draggable(this.element, this.parent)
-        utils.dragInit(this.element, this.isSelected, this.elements, this.mouseMove, this.parent, utils.mouseDownHandler);
+        utils.dragInit(this.element, this.mouseMove, this.parent);
     }
 
     private detectOverlap(element: T, container: HTMLElement) {
-        // const { x, y } = contianer.getBoundingClientRect()
         // 위의 문법으로 수정
         const selectedElement = this.element.getBoundingClientRect();
 
@@ -72,4 +60,3 @@ export class BaseComponent<T extends HTMLElement>  {
         this.element.style.border = '2px solid red'
     }
 }
-

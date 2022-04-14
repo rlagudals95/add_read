@@ -54,8 +54,8 @@ export class drawSwitch<T extends HTMLElement> {
 
         let cnt: number = 0; // 생성한 요소 개수
 
-        const drawSwitch = document.getElementById('drawSwitch');
-        const container: HTMLElement = document.getElementById('document')!;
+        const drawSwitch: HTMLElement = document.getElementById('drawSwitch')! as HTMLElement;;
+        const container: HTMLElement = document.getElementById('document')! as HTMLElement;
 
         this.isDraw = !this.isDraw
 
@@ -74,7 +74,7 @@ export class drawSwitch<T extends HTMLElement> {
                     cnt++ // 생성한 요소 갯수 카운팅
                     const squareOptions = {
                         container: container,
-                        htmlString: `<div style="width: 200px; height: 200px;"><div>`,
+                        htmlString: `<span style="width: 200px; height: 200px;"><span>`,
                         x: this.pos.x, y: this.pos.y, cnt: cnt
                     }
 
@@ -102,4 +102,4 @@ export class drawSwitch<T extends HTMLElement> {
         };
     }
 
-}
+} 
