@@ -2,7 +2,7 @@ import { consoleUtil } from "./consoleUtil";
 
 
 export const detectOverlap = (element: HTMLElement, elements ,container: HTMLElement) => {
-    
+    consoleUtil('detectOverlap')
     const selectedElement = element.getBoundingClientRect();
     
     let childArr = elements;

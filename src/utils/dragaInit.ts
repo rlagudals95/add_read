@@ -28,8 +28,5 @@ export const dragInit = (element: HTMLElement, mouseMove, parent: HTMLElement, e
             ele.style.border = 'none;'
         })
 
-        // for (let i = 0; i < elements.length; i++) {
-        //     elements[i].style.border = 'none;'
-        // }
     })
 }

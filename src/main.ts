@@ -1,11 +1,11 @@
-import { drawButton } from "./components/dragButton";
-import { drawButtonOptions } from "./components/dragButton"
+import { drawButton } from "./components/drawButton";
+import { drawButtonOptions } from "./components/drawButton"
 import {consoleUtil} from "./utils/consoleUtil"
 import "./css/common.css"
 
 window.onload = function () {
 
-    console.log('개발환경 :',process.env.NODE_ENV)
+    console.log('env :',process.env.NODE_ENV)
 
     const drawButtonOptions: drawButtonOptions = {
         container: document.getElementById('wrapper'),
