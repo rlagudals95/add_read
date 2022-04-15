@@ -13,8 +13,8 @@ export class BaseComponent<T extends HTMLElement>  {
         const template = document.createElement('template');
         template.innerHTML = drawOptions.htmlString;
 
-        this.parent = drawOptions.container
 
+        this.parent = drawOptions.container
         this.element = template.content.firstElementChild! as T;
         this.element.style.position = 'absolute';
         this.element.style.transform = 'translate(-50%, -50%)'
@@ -24,7 +24,6 @@ export class BaseComponent<T extends HTMLElement>  {
 
         this.element.style.backgroundColor = 'rgba(255,0,0,0.2)';
         this.element.style.opacity = '1';
-
         utils.attachTo(drawOptions, this.element);
 
         this.mouseMove = () => { utils.throttle(this.detectOverlap(this.element, this.parent)) }

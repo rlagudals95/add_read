@@ -43,7 +43,6 @@ module.exports = {
         }),
         new webpack.HotModuleReplacementPlugin(),
         new MiniCssExtractPlugin({ linkType: false, })
-
     ],
     devServer: {
         host: "localhost", // live-server host 및 port

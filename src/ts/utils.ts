@@ -1,4 +1,5 @@
 export const utils = {
+
     waiting: false as boolean,
     element: null as HTMLElement,
     isSeleted: false as boolean,
@@ -157,6 +158,5 @@ export const utils = {
         container.style.height = `${scrollY}px`
 
     },
-
 
 }
