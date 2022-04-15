@@ -2,11 +2,12 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: "./src/main.ts", // 번들링 시작 위치
     output: {
-        path: path.join(__dirname, "/dist"), // 번들 결과물 위치
+        path: path.join(__dirname, "/docs"), // 번들 결과물 위치
         filename: "bundle.js",
     },
     module: {
@@ -25,10 +26,11 @@ module.exports = {
                     loader: "ts-loader",
                 },
             },
-            // {
-            //     test: /\.css$/,
-            //     use: [MiniCssExtractPlugin.loader, 'css-loader'],
-            // }
+            {
+                test: /\.css$/i,
+                exclude: /node_modules/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader'],
+            }
         ],
     },
     resolve: {
@@ -40,12 +42,11 @@ module.exports = {
             template: "./public/index.html", // 템플릿 위치
         }),
         new webpack.HotModuleReplacementPlugin(),
-        //new MiniCssExtractPlugin({ filename: 'common.css' })
-
+        new MiniCssExtractPlugin({ linkType: false, })
     ],
     devServer: {
         host: "localhost", // live-server host 및 port
-        port: 5500,
+        port: 5700,
         hot: true // hot reload
     },
     mode: "development", // 번들링 모드 development / production

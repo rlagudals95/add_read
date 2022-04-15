@@ -1,27 +1,19 @@
-import { SquareComponent } from "./components/square.js"
-import { drawOptions } from "./ts/draw.js"
 
-let pos = {
-    x: -1,
-    y: -1,
-};
-let cnt: number = 0; // 생성한 요소 개수
-
-
-function getPosition(event: any): void {
-    let x: number = event.pageX;
-    let y: number = event.pageY;
-
-    pos.x = x;
-    pos.y = y;
-
-}
-
-
+import { drawSwitch } from "./components/dragSwitch.js";
+import { drawSwitchOptions } from "./components/dragSwitch.js"
+import "./css/common.css"
 
 window.onload = function () {
 
-    drawOptions.drawOn();
+    const drawSwitchOptions: drawSwitchOptions = {
+        container: document.getElementById('wrapper'),
+        htmlString: `<button id="drawSwitch">상자그리기</button>`,
+        x: 50,
+        y: 20
+
+    }
+
+    new drawSwitch(drawSwitchOptions);
 
 }
 
