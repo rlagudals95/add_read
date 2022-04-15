@@ -1,3 +1,5 @@
+import {consoleUtil} from "../utils/consoleUtil"
+
 export const utils = {
     waiting: false as boolean,
     element: null as HTMLElement,
@@ -89,7 +91,7 @@ export const utils = {
     },
 
     removeEvent(element: HTMLElement) {
-        console.log('removeEvent')
+        consoleUtil('removeEvent')
         const el = element,
             elClone = el.cloneNode(true);
 
@@ -97,7 +99,7 @@ export const utils = {
     },
 
     moveTop: (event: MouseEvent, element: HTMLElement, parent: HTMLElement) => { // z-index to
-        console.log('moveTop!');
+        consoleUtil('moveTop!');
         event.stopPropagation();
         event.preventDefault();
         const elements = utils.elements
@@ -117,8 +119,8 @@ export const utils = {
     moveElement: (event, element, container, isItIn,
         resizeScreen) => {
         // 타겟 비교하기 보완하기....!!!!!
-        console.log(event.target.tagName)
-        console.log(event.offsetX, '/', event.offsetY)
+        consoleUtil(event.target.tagName)
+        consoleUtil(event.offsetX)
         // event.offsetX > 120 
         // event.target.tagName == 'DIV'
 
