@@ -5,7 +5,7 @@ import "./css/common.css"
 
 window.onload = function () {
 
-    console.log('env :',process.env.NODE_ENV)
+    console.log('env :', process.env.NODE_ENV)
 
     const drawButtonOptions: drawButtonOptions = {
         container: document.getElementById('wrapper'),

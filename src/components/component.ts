@@ -22,6 +22,7 @@ S
         //this.parent = drawOptions.container
         this.parent = document.body
 
+        this.parent = drawOptions.container
         this.element = template.content.firstElementChild! as T;
         this.element.style.position = 'absolute';
         this.element.style.transform = 'translate(-50%, -50%)'
