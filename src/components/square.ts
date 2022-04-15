@@ -29,4 +29,4 @@ export class SquareComponent<T extends HTMLElement> extends BaseComponent<T> {
             cnt: 0,
         };
     }
-}
+} 

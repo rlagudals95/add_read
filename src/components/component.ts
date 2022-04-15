@@ -39,10 +39,9 @@ export class BaseComponent<T extends HTMLElement>  {
         const selectedElement = this.element.getBoundingClientRect();
 
         let childArr = utils.elements;
-        for (let i = 0; i < childArr.length; i++) {
+        for (const _element of childArr) {
 
-            const elementRect = childArr[i].getBoundingClientRect();
-            const _element = childArr[i] as HTMLElement
+            const elementRect = _element.getBoundingClientRect();
 
             if (
                 selectedElement.x < elementRect.x + elementRect.width &&

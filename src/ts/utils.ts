@@ -15,7 +15,7 @@ export const utils = {
 
         const moveElement = (event) => {
 
-            this.throttle(this.moveElement(event, element, container, this.isItIn, this.resizeScreen, this.setPosition, this.position))
+            this.throttle(this.moveElement(event, element, container, this.isItIn, this.resizeScreen))
 
         }
 
@@ -115,7 +115,7 @@ export const utils = {
     },
 
     moveElement: (event, element, container, isItIn,
-        resizeScreen, position) => {
+        resizeScreen) => {
         // 타겟 비교하기 보완하기....!!!!!
         console.log(event.target.tagName)
         console.log(event.offsetX, '/', event.offsetY)
@@ -133,7 +133,7 @@ export const utils = {
         }
     },
 
-
+    // 커서가 화면안에 있는지 감지하는 함수
     isItIn: (parent: HTMLElement, child: HTMLElement) => {
         const box1coords = parent.getBoundingClientRect();
         const box2coords = child.getBoundingClientRect();
@@ -158,9 +158,5 @@ export const utils = {
 
     },
 
-    setPosition: (element: HTMLElement, position) => {
 
-        element.style.left = `${position.x}px`;
-        element.style.top = `${position.y}px`;
-    },
 }
