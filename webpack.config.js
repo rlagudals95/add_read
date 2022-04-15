@@ -3,11 +3,12 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: "./src/main.ts", // 번들링 시작 위치
     output: {
-        path: path.join(__dirname, "/docs"), // 번들 결과물 위치
+        path: path.join(__dirname, "/dist"), // 번들 결과물 위치
         filename: "bundle.js",
     },
     module: {
@@ -42,7 +43,12 @@ module.exports = {
             template: "./public/index.html", // 템플릿 위치
         }),
         new webpack.HotModuleReplacementPlugin(),
-        new MiniCssExtractPlugin({ linkType: false, })
+        new MiniCssExtractPlugin({ linkType: false, }),
+        new CopyPlugin({
+            patterns: [
+              { from: "./dist", to: "../docs" }, // githubPage에 사용되는 docs 디렉토리에 번들파일 copy
+            ],
+          }),
 
     ],
     devServer: {
