@@ -5,6 +5,7 @@ const webpack = require("webpack");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 
+
 module.exports = {
     entry: "./src/main.ts", // 번들링 시작 위치
     output: {
@@ -41,6 +42,9 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: "./public/index.html", // 템플릿 위치
+        }),
+        new webpack.EnvironmentPlugin({
+            NODE_ENV: 'development'
         }),
         new webpack.HotModuleReplacementPlugin(),
         new MiniCssExtractPlugin({ linkType: false, }),

@@ -1,6 +1,8 @@
-import { utils } from '../ts/utils'
 import { SquareComponent } from './square';
 import { consoleUtil } from '../utils/consoleUtil';
+import { attachTo } from '../utils/attachTo';
+import { removeEvent } from '../utils/removeEvent';
+import { getPosition } from '../utils/getPosition';
 
 export interface drawButtonOptions {
     container: HTMLElement, // 삽입할 html의 부모태그
@@ -44,14 +46,10 @@ export class drawButton<T extends HTMLElement> {
             this.drawOn()
         })
 
-        utils.attachTo(initOptions, this.element);
+        attachTo(initOptions, this.element);
     }
 
-    private getPosition = (event) => {
-        this.pos.x = event.pageX
-        this.pos.y = event.pageY
-    }
-
+    
     private drawOn() {
         consoleUtil('drawOn!')
         let cnt: number = 0; // 생성한 요소 개수
@@ -67,7 +65,8 @@ export class drawButton<T extends HTMLElement> {
             drawButton.style.border = '1px solid #e54839';
             container.style.cursor = 'crosshair'
             container.addEventListener('mousemove', (e) => {
-                this.getPosition(e)
+                getPosition(e,this.pos)
+                //this.getPosition(e)
             });
             container.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -93,7 +92,7 @@ export class drawButton<T extends HTMLElement> {
             drawButton.style.background = 'gray';
             drawButton.style.border = '1px solid black';
             container.style.cursor = 'not-allowed'
-            utils.removeEvent(container)
+            removeEvent(container)
 
         }
     }
