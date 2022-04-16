@@ -1,6 +1,6 @@
 import { consoleUtil } from "./consoleUtil";
 
-export const moveTop = (event: MouseEvent, element: HTMLElement, parent: HTMLElement, elements) => { // z-index to
+export const moveTop = (element: HTMLElement, parent: HTMLElement, elements) => { // z-index to
     consoleUtil('moveTop!');
     event.stopPropagation();
     event.preventDefault();

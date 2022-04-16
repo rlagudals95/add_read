@@ -43,19 +43,18 @@ export class drawButton<T extends HTMLElement> {
             e.stopPropagation();
             e.preventDefault()
            
-            this.drawOn()
+            this.drawOn(this.element, drawButtonOptions.container)
         })
 
         attachTo(initOptions, this.element);
     }
 
     
-    private drawOn() {
+    private drawOn(element:HTMLElement, container:HTMLElement) {
         consoleUtil('drawOn!')
-        let cnt: number = 0; // 생성한 요소 개수
 
-        const drawButton: HTMLElement = document.getElementById('drawButton')! as HTMLElement;;
-        const container: HTMLElement = document.getElementById('container')! as HTMLElement;
+        let cnt: number = 0; // 생성한 요소 개수
+        const drawButton:HTMLElement = element;
         
         this.isDraw = !this.isDraw
 

@@ -4,7 +4,7 @@ import { moveTop } from "./moveTop";
 export const dragInit = (element: HTMLElement, mouseMove, parent: HTMLElement, elements) => {
 
     element.addEventListener('click', (e) => {
-        moveTop(e, element, parent, elements);
+        moveTop(element, parent, elements);
     });
 
     element.addEventListener('mouseover', () => {

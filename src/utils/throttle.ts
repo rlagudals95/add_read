@@ -1,6 +1,6 @@
-const delayTime:number = 300;
+const DELAYTIME:number = 300;
 
-export const throttle = (callback, limit = delayTime) => {
+export const throttle = (callback, limit = DELAYTIME) => {
     return function () {
         if (!this.waiting) {
             callback.apply(this, arguments)
