@@ -1,7 +1,7 @@
 import { SquareComponent } from './square';
 import { consoleUtil } from '../utils/consoleUtil';
 import { attachTo } from '../utils/attachTo';
-import { removeEvent } from '../utils/removeEvent';
+import { removeAllEventListener } from '../utils/removeAllEventListener';
 import { getPosition } from '../utils/getPosition';
 
 export interface drawButtonOptions {
@@ -91,7 +91,7 @@ export class drawButton<T extends HTMLElement> {
             drawButton.style.background = 'gray';
             drawButton.style.border = '1px solid black';
             container.style.cursor = 'not-allowed'
-            removeEvent(container)
+            removeAllEventListener(container)
 
         }
     }

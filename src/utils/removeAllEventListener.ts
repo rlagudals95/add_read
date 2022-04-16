@@ -1,7 +1,7 @@
 import { consoleUtil } from "./consoleUtil";
 
-export const removeEvent = (element: HTMLElement) =>  {
-    consoleUtil('removeEvent')
+export const removeAllEventListener = (element: HTMLElement) =>  {
+    consoleUtil('removeAllEventListener')
     const el = element,
         elClone = el.cloneNode(true);
 

@@ -2,7 +2,7 @@ import { draggable } from '../utils/draggable';
 import { elements } from '../utils/attachTo';
 import { consoleUtil } from '../utils/consoleUtil';
 import { attachTo } from '../utils/attachTo';
-import { detectOverlap } from '../utils/detectOverlap';
+import { detectIntersect } from '../utils/detectIntersect';
 import { throttle } from '../utils/throttle';
 import { dragInit } from '../utils/dragaInit';
 
@@ -11,8 +11,8 @@ export class BaseComponent<T extends HTMLElement>  {
     private element!: T;
     private parent: HTMLElement
     public isSelected: boolean;
-    private mouseMove
-S
+    private mouseMove;
+
     constructor(drawOptions) {
 
         // container의 x, y 위치에 element를 그린다.
@@ -36,7 +36,7 @@ S
         elements.push(this.element)
         
       
-        this.mouseMove = () => { throttle(detectOverlap(this.element, elements, this.parent)) }
+        this.mouseMove = () => { throttle(detectIntersect(this.element, elements, this.parent)) }
 
         // 드래그 on
         draggable(this.element, this.parent, elements )
