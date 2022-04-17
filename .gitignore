@@ -38,13 +38,6 @@ bower_components
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
 
-# custom
-src/main.js
-src/ts/utils.js
-src/components/component.js
-src/components/dragSwitch.js
-src/components/square.js
-
 # Dependency directories
 node_modules/
 jspm_packages/

@@ -1,19 +1,21 @@
-
-import { drawSwitch } from "./components/dragSwitch.js";
-import { drawSwitchOptions } from "./components/dragSwitch.js"
+import { drawButton } from "./components/drawButton";
+import { drawButtonOptions } from "./components/drawButton"
+import { Logger } from "./utils/Logger";
 import "./css/common.css"
 
 window.onload = function () {
 
-    const drawSwitchOptions: drawSwitchOptions = {
+    Logger.info(`env :, ${process.env.NODE_ENV}`)
+
+    const drawButtonOptions: drawButtonOptions = {
         container: document.getElementById('wrapper'),
-        htmlString: `<button id="drawSwitch">상자그리기</button>`,
+        htmlString: `<button id="drawButton">상자그리기</button>`,
         x: 50,
         y: 20
 
     }
 
-    new drawSwitch(drawSwitchOptions);
+    new drawButton(drawButtonOptions);
 
 }
 

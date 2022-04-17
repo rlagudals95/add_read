@@ -44,13 +44,13 @@ module.exports = {
             template: "./public/index.html", // 템플릿 위치
         }),
         new webpack.EnvironmentPlugin({
-            NODE_ENV: 'development'
+            NODE_ENV: 'production'
         }),
         new webpack.HotModuleReplacementPlugin(),
         new MiniCssExtractPlugin({ linkType: false, }),
         new CopyPlugin({
             patterns: [
-              { from: "./dist", to: "../docs" }, // githubPage에 사용되는 docs 디렉토리에 번들파일 copy
+              { from: "./dist", to: "../docs" ,  noErrorOnMissing: true}, // githubPage에 사용되는 docs 디렉토리에 번들파일 copy
             ],
           }),
 
@@ -60,5 +60,5 @@ module.exports = {
         port: 5700,
         hot: true // hot reload
     },
-    mode: "development", // 번들링 모드 development / production
+    mode: "production", // 번들링 모드 development / production
 };

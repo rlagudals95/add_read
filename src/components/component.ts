@@ -1,11 +1,18 @@
-import { utils } from '../ts/utils'
+import { draggable } from '../utils/draggable';
+import { elements } from '../utils/attachTo';
+import { attachTo } from '../utils/attachTo';
+import { detectIntersect } from '../utils/detectIntersect';
+import { throttle } from '../utils/throttle';
+import { dragInit } from '../utils/dragaInit';
+
 
 export class BaseComponent<T extends HTMLElement>  {
-
+    
     private element!: T;
     private parent: HTMLElement
-    public isSelected: boolean;
-    private mouseMove
+    //public isSelected: boolean;
+    private mouseMove;
+    private isIntersect:boolean = false;
 
     constructor(drawOptions) {
 
@@ -13,6 +20,8 @@ export class BaseComponent<T extends HTMLElement>  {
         const template = document.createElement('template');
         template.innerHTML = drawOptions.htmlString;
 
+        //this.parent = drawOptions.container
+        this.parent = document.body
 
         this.parent = drawOptions.container
         this.element = template.content.firstElementChild! as T;
@@ -20,41 +29,24 @@ export class BaseComponent<T extends HTMLElement>  {
         this.element.style.transform = 'translate(-50%, -50%)'
         this.element.style.left = `${drawOptions.x}px`;
         this.element.style.top = `${drawOptions.y}px`;
-        //this.element.className = 'drag_component';
-
+        
         this.element.style.backgroundColor = 'rgba(255,0,0,0.2)';
         this.element.style.opacity = '1';
-        utils.attachTo(drawOptions, this.element);
 
-        this.mouseMove = () => { utils.throttle(this.detectOverlap(this.element, this.parent)) }
-
-        // 드래그 on
-        utils.draggable(this.element, this.parent)
-        utils.dragInit(this.element, this.mouseMove, this.parent);
-    }
-
-    private detectOverlap(element: T, container: HTMLElement) {
-        // 위의 문법으로 수정
-        const selectedElement = this.element.getBoundingClientRect();
-
-        let childArr = utils.elements;
-        for (const _element of childArr) {
-
-            const elementRect = _element.getBoundingClientRect();
-
-            if (
-                selectedElement.x < elementRect.x + elementRect.width &&
-                selectedElement.x + selectedElement.width > elementRect.x &&
-                selectedElement.y < elementRect.y + elementRect.height &&
-                selectedElement.height + selectedElement.y > elementRect.y
-            ) {
-                _element.style.border = '2px solid blue'
-            } else {
-                _element.style.border = 'none'
-            }
-            //_element.style.border = 'none'
+        this.element.setAttribute('id', 'test')
+        attachTo(drawOptions, this.element);
+        elements.push(this.element)
+        
+        
+        this.mouseMove = () => { 
+            //console.log('ㅇㅅㅇ : ',throttle(detectIntersect(this.element, elements, this.parent)) )
+            throttle(detectIntersect(this.element, elements, this.parent)) 
+            
         }
 
-        this.element.style.border = '2px solid red'
+        // 드래그 on
+        draggable(this.element, this.parent, elements )
+        dragInit(this.element, this.mouseMove, this.parent, elements);
     }
+
 }
