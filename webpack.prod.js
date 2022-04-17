@@ -50,7 +50,7 @@ module.exports = {
         new MiniCssExtractPlugin({ linkType: false, }),
         new CopyPlugin({
             patterns: [
-              { from: "./dist", to: "../docs" }, // githubPage에 사용되는 docs 디렉토리에 번들파일 copy
+              { from: "./dist", to: "../docs" ,  noErrorOnMissing: true}, // githubPage에 사용되는 docs 디렉토리에 번들파일 copy
             ],
           }),
 
