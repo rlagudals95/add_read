@@ -1,6 +1,7 @@
-const DELAYTIME:number = 300;
+import { Logger } from "./Logger";
+import { DELAY_TIME } from "../config/constants";
 
-export const throttle = (callback, limit = DELAYTIME) => {
+export const throttle = (callback, limit = DELAY_TIME) => {
     return function () {
         if (!this.waiting) {
             callback.apply(this, arguments)
@@ -11,3 +12,5 @@ export const throttle = (callback, limit = DELAYTIME) => {
         }
     }
 }
+
+

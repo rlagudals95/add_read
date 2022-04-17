@@ -1,9 +1,8 @@
-import { consoleUtil } from "./consoleUtil";
 import { throttle } from "./throttle";
-
-export const detectIntersect = (element: HTMLElement, elements: HTMLElement [] ,container: HTMLElement):boolean => {
-    //consoleUtil('detectOverlap')
-
+import { Logger } from "./Logger";
+export const detectIntersect = (element: HTMLElement, elements: HTMLElement [] ,container: HTMLElement) => {
+    Logger.info('detectIntersect')
+    
     const selectedElement = element.getBoundingClientRect();
     
     for (const _element of elements) {
@@ -16,14 +15,13 @@ export const detectIntersect = (element: HTMLElement, elements: HTMLElement [] ,
             selectedElement.y < elementRect.y + elementRect.height &&
             selectedElement.height + selectedElement.y > elementRect.y
         ) {
-            //_element.style.border = '2px solid blue'
-            return false;
+            //return true
+            _element.style.border = '2px solid blue'
+           
         } else {
-            //_element.style.border = 'none'
-            return true;
+            //return false
+            _element.style.border = 'none' 
         }
-        //_element.style.border = 'none'
+       
     }
-
-    //element.style.border = '2px solid red'
 }

@@ -1,5 +1,4 @@
 import { SquareComponent } from './square';
-import { consoleUtil } from '../utils/consoleUtil';
 import { attachTo } from '../utils/attachTo';
 import { removeAllEventListener } from '../utils/removeAllEventListener';
 import { getPosition } from '../utils/getPosition';
@@ -46,12 +45,11 @@ export class drawButton<T extends HTMLElement> {
             this.drawOn(this.element, drawButtonOptions.container)
         })
 
-        attachTo(initOptions, this.element);
+        attachTo(drawButtonOptions, this.element);
     }
 
     
     private drawOn(element:HTMLElement, container:HTMLElement) {
-        consoleUtil('drawOn!')
 
         let cnt: number = 0; // 생성한 요소 개수
         const drawButton:HTMLElement = element;
@@ -79,15 +77,14 @@ export class drawButton<T extends HTMLElement> {
                         htmlString: `<span style="width: 200px; height: 200px;"><span>`,
                         x: this.pos.x, y: this.pos.y, cnt: cnt
                     }
-                    consoleUtil(squareOptions)
+              
                     new SquareComponent(squareOptions);
                 } else {
                     alert('상자추가하기 버튼을 클릭해주세요😀 ');
                 }
             })
         } else {
-            // 이벤트 제거
-            consoleUtil('removeEvent')
+        
             drawButton.style.background = 'gray';
             drawButton.style.border = '1px solid black';
             container.style.cursor = 'not-allowed'
